@@ -6,7 +6,7 @@ import unittest
 # FOLLOW UP
 # How would you solve this problem if a temporary buffer is not allowed?
 
-class TestRmoveduplicates(unittest.TestCase):
+class TestStringMethods(unittest.TestCase):
 
     def test_checker(self):
         mylist = UnorderedList()
@@ -31,7 +31,6 @@ class TestRmoveduplicates(unittest.TestCase):
 
         # The size of the Unordered Linked list should be 6
         self.assertEqual(mylist.size(), 6)
-
         # There should still be an occurrence of every digit:
         # 31, 77, 17, 93, 26, 54
         self.assertTrue(mylist.search(31))
