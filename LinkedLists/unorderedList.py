@@ -11,9 +11,23 @@ class UnorderedList:
         return self.head == None
 
     def add(self, item):
-        temp = Node(item)
-        temp.setNext(self.head)
-        self.head = temp
+        # temp = Node(item)
+        # temp.setNext(self.head)
+        # self.head = temp
+
+        current = self.head
+        previous = None
+        newNode = Node(item)
+
+        if self.head is None:
+            self.head = newNode
+        else:
+            while current is not None:
+                previous = current
+                current = current.getNext()
+            previous.setNext(newNode)
+
+
 
     def size(self):
         current = self.head
@@ -59,10 +73,37 @@ class UnorderedList:
             current = current.getNext()
 
     # Returns a list of duplicate node items
+    # def find_duplicates(self):
+    #     current = self.head
+    #     duplicates = {}
+    #     nonduplicates = []
+    #     # Build up a dictionary of the node data from the
+    #     # linked list and store the count of their occurrences
+    #     # as their values
+    #     while current is not None:
+    #         if current.getData() in duplicates:
+    #             duplicates[current.getData()] += 1
+    #         else:
+    #             duplicates[current.getData()] = 1
+    #
+    #         current = current.getNext()
+    #
+    #     # Filter out the node data which are not duplicates and store
+    #     # in a list to be returned
+    #     for item in duplicates:
+    #
+    #         if duplicates[item] == 1:
+    #             nonduplicates.append(item)
+    #
+    #     for dup in nonduplicates:
+    #         del duplicates[dup]
+    #
+    #     return duplicates
+
     def find_duplicates(self):
         current = self.head
         duplicates = {}
-        nonduplicates = []
+
         # Build up a dictionary of the node data from the
         # linked list and store the count of their occurrences
         # as their values
@@ -74,52 +115,4 @@ class UnorderedList:
 
             current = current.getNext()
 
-        # Filter out the node data which are not duplicates and store
-        # in a list to be returned
-        for item in duplicates:
-
-            if duplicates[item] == 1:
-                nonduplicates.append(item)
-
-        for dup in nonduplicates:
-            del duplicates[dup]
-
-        return duplicates
-
-    def findFromNth(self, n):
-        current = self.head
-        newlist = UnorderedList()
-
-        for indice in range(0, n):
-            current = current.getNext()
-
-        while current is not None:
-            newlist.add(current.getData())
-            current = current.getNext()
-
-        return newlist
-
-    # Assume that all elements in the list are unique
-    def find_loop_head(self):
-        current = self.head
-        nodeCounter = {}
-
-        while current.getNext() is not None:
-            if current.getData() in nodeCounter:
-                nodeCounter[current.getData()] += 1
-            else:
-                nodeCounter[current.getData()] = 1
-
-            if nodeCounter[current.getData()] >= 2:
-                break
-
-        return current.getData()
-
-    def change_next(self, origin, dest):
-        current = self.head
-
-        while current.getData() != origin:
-            current = current.getNext()
-
-        current.setNext(dest)
-        print(origin, "now points to", dest)
+        # Remove duplicates
