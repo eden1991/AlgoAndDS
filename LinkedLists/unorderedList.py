@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from algo_and_ds.LinkedLists.node import Node
+from AlgoAndDS.LinkedLists.node import Node
 
 
 class UnorderedList:
