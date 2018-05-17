@@ -35,4 +35,17 @@ class Stack:
 
         return count
 
+    '''
+    3.2
+    '''
+    def findMin(self):
+        min = self.top.getData()
+        current = self.top.getNext()
 
+        while current is not None:
+            if current.getData() < min:
+                min = current.getData()
+
+            current = current.getNext()
+
+        return min

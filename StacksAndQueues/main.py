@@ -78,5 +78,21 @@ class TestStackMethods(unittest.TestCase):
         wardrobe[0].pop()
         self.assertEqual(len(wardrobe[0]), 0)
 
+    '''
+    3.2 How would you design a stack which, in addition to push and pop, also has a function
+    min which returns the minimum element? Push, pop and min should all operate in
+    O(1) time.
+    '''
+    def test_min(self):
+        numbersStack = Stack()
+        numbers = [ 4, 2, 3, 1, 5, 6, 7, 8 ]
+        # push all the numbers in the numbers list in to numbersStack
+        for number in numbers:
+            numbersStack.push(number)
+
+        self.assertEqual(numbersStack.findMin(), 1)
+
+
+
 if __name__ == '__main__':
     unittest.main()
