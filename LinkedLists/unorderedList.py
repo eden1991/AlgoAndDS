@@ -191,4 +191,4 @@ class UnorderedList:
 
         # Set the current (origin) node to point to some node which will invoke
         # an endless loop
-        current.setNext(end)
+        current.set_next(end)
