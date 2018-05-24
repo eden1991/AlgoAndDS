@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from AlgoAndDS.StacksAndQueues.Stacks.stack import Stack
-from AlgoAndDS.StacksAndQueues.Stacks.setOfStacks import SetOfStacks
+from StacksAndQueues.Stacks.stack import Stack
+from StacksAndQueues.Stacks.setOfStacks import SetOfStacks
 import unittest
 import gc
 

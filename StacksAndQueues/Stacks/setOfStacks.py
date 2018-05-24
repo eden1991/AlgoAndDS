@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from AlgoAndDS.StacksAndQueues.Stacks.stack import Stack
+from StacksAndQueues.Stacks.stack import Stack
 
 '''
 3.3 Imagine a (literal) stack of plates. If the stack gets too high, it might topple. Therefore,
@@ -19,7 +19,10 @@ sub-stack.
 class SetOfStacks:
 
     def __init__(self, max_size):
+        # Initial the new set with a stack by default
         self.head_stack = Stack()
+        # Store the passed in max_size parameter in order to be bale to check and maintain that
+        # stacks do not grow excessively and topple over.
         self.max_size = max_size
 
     def push(self, item):
@@ -67,8 +70,11 @@ class SetOfStacks:
 
     def set_size(self):
         current = self.head_stack
+        # A variable to keep count of the number of stacks in the set
         stack_count = 0
+        # A list to store a count of the number of node items within each stack
         items_per_stack_count = []
+        # A variable to keep a sum of the overall number of node items in the set
         total_items_count = 0
 
         while current is not None:
@@ -80,8 +86,10 @@ class SetOfStacks:
         return stack_count, items_per_stack_count, total_items_count
 
     def is_set_empty(self):
+        # The set is empty if the head stack size is 0 and there is no following stack
         return self.head_stack.size() == 0 and self.head_stack.get_next() is None
 
+    # Iterates through the set and uses the stack method print_nodes() to print all nodes in the set
     def list_set_node_items(self):
         current_stack = self.head_stack
         stack_number = 0
