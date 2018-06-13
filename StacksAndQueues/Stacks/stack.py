@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-from StacksAndQueues.Stacks.node import Node
+from AlgoAndDS.StacksAndQueues.Stacks.node import Node
 
 
 class Stack:
@@ -94,7 +93,7 @@ class Stack:
         current = self.top
 
         while current is not None:
-            print(current.getData())
+            print(current.getData(), end=' ')
             current = current.getNext()
 
     def search_for_node(self, target):

@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-from StacksAndQueues.Stacks.stack import Stack
+from AlgoAndDS.StacksAndQueues.Stacks.stack import Stack
 
 '''
 3.3 Imagine a (literal) stack of plates. If the stack gets too high, it might topple. Therefore,
@@ -19,7 +18,7 @@ sub-stack.
 class SetOfStacks:
 
     def __init__(self, max_size):
-        # Initial the new set with a stack by default
+        # Initialise the new set with a stack by default
         self.head_stack = Stack()
         # Store the passed in max_size parameter in order to be bale to check and maintain that
         # stacks do not grow excessively and topple over.

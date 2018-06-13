@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-from StacksAndQueues.Stacks.stack import Stack
-from StacksAndQueues.Stacks.setOfStacks import SetOfStacks
+from AlgoAndDS.StacksAndQueues.Stacks.stack import Stack
+from AlgoAndDS.StacksAndQueues.Stacks.setOfStacks import SetOfStacks
+from AlgoAndDS.StacksAndQueues.Stacks.sort import sort_stack
 import unittest
-import gc
 
 
 class TestStackMethods(unittest.TestCase):
@@ -218,15 +218,43 @@ class TestStackMethods(unittest.TestCase):
          3       |9|                | |
          2       |8|                | |
          1       |7|                | |
-         0       |6|              5 |1|
+         0       |6|        5       |1|
         '''
 
-        # Check that the top node in the first stack is 5 bi directly peeking at the stack
+        # Check that the top node in the first stack is 5 by directly peeking at the stack
         self.assertEqual(some_set.head_stack.peek(), 5)
         # some_set.list_set_node_items()
         # Check that the top node in the second stack (and hence, the top of the set of stacks)
         # is 1.
         self.assertEqual(some_set.peek(), 1)
+
+    '''
+    3.6 Write a program to sort a stack in ascending order. You should not make any assumptions
+    about how the stack is implemented. The following are the only functions that
+    should be used to write this program: push | pop | peek | isEmpty.
+    
+    See sort.py for solution code.
+    '''
+    def test_sort_stack(self):
+        myStack = Stack()
+        unsorted_numbers = [5, 5, 1, 3, 3, 2, 66, 4, 8, 3, 9, 10]
+        for unsorted_num in unsorted_numbers:
+            myStack.push(unsorted_num)
+
+        sort_stack(myStack)
+        # Let's test in sequence that all nodes are stored in ascending order
+        self.assertEqual(myStack.pop().getData(), 1)
+        self.assertEqual(myStack.pop().getData(), 2)
+        self.assertEqual(myStack.pop().getData(), 3)
+        self.assertEqual(myStack.pop().getData(), 3)
+        self.assertEqual(myStack.pop().getData(), 3)
+        self.assertEqual(myStack.pop().getData(), 4)
+        self.assertEqual(myStack.pop().getData(), 5)
+        self.assertEqual(myStack.pop().getData(), 5)
+        self.assertEqual(myStack.pop().getData(), 8)
+        self.assertEqual(myStack.pop().getData(), 9)
+        self.assertEqual(myStack.pop().getData(), 10)
+        self.assertEqual(myStack.pop().getData(), 66)
 
 
 if __name__ == '__main__':
