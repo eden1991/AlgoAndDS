@@ -1,4 +1,5 @@
 from AlgoAndDS.StacksAndQueues.Stacks.stack import Stack
+from AlgoAndDS.LinkedLists.unorderedList import UnorderedList
 
 '''
 3.3 Imagine a (literal) stack of plates. If the stack gets too high, it might topple. Therefore,
@@ -19,70 +20,50 @@ class SetOfStacks:
 
     def __init__(self, max_size):
         # Initialise the new set with a stack by default
-        self.head_stack = Stack()
-        # Store the passed in max_size parameter in order to be bale to check and maintain that
+        # Store the passed in max_size parameter in order to be able to check and maintain that
         # stacks do not grow excessively and topple over.
         self.max_size = max_size
+        self.stack_set = UnorderedList()
+        self.tail_stack = Stack()
+        self.stack_set.add(self.tail_stack)
+        # Keep track of the total number of stacks in the set
+        self.stack_count = 1
+        # Keep track of the total number of node items in the set
+        self.items_count = 0
 
     def push(self, item):
-        current = self.head_stack
-
-        # Get down to the end stack
-        while current.get_next() is not None:
-            current = current.get_next()
-
         # Add a new stack to the set if the end one is full
-        if current.size() == self.max_size:
-            new_stack = Stack()
-            current.set_next(new_stack)
-            new_stack.set_previous(current)
-            current = current.get_next()
+        if self.tail_stack.size() == self.max_size:
+            self.tail_stack = Stack()
+            self.stack_set.add(self.tail_stack)
+            self.stack_count += 1
 
-        # Push the new node in to the last stack of the set
-        current.push(item)
+        # Push the new node in to the last stack of the set and increment the items count
+        self.items_count += 1
+        self.tail_stack.push(item)
 
     def peek(self):
-        current = self.head_stack
-
-        # Get down to the end stack
-        while current.get_next() is not None:
-            current = current.get_next()
-
-        return current.peek()
+        return self.tail_stack.peek()
 
     def pop(self):
-        current = self.head_stack
-
-        while current.get_next() is not None:
-            current = current.get_next()
-
-        popped = current.pop()
+        popped = self.tail_stack.pop()
 
         # Remove the last stack if it is empty
-        if current.size() == 0:
-            if current.get_previous() is not None:
-                previous = current.get_previous()
-                previous.set_next(None)
-            current.set_previous(None)
+        if self.tail_stack.is_empty():
+            self.stack_set.remove(self.tail_stack)
 
+            current = self.stack_set.head
+            while current.getNext() is not None:
+                current = current.getNext()
+            self.tail_stack = current
+            self.stack_count -= 1
+
+        self.items_count -= 1
         return popped
 
     def set_size(self):
-        current = self.head_stack
-        # A variable to keep count of the number of stacks in the set
-        stack_count = 0
-        # A list to store a count of the number of node items within each stack
-        items_per_stack_count = []
-        # A variable to keep a sum of the overall number of node items in the set
-        total_items_count = 0
-
-        while current is not None:
-            stack_count += 1
-            items_per_stack_count.append(current.size())
-            total_items_count += current.size()
-            current = current.get_next()
-
-        return stack_count, items_per_stack_count, total_items_count
+         # return stack_count, items_per_stack_count, total_items_count
+        return self.stack_count, self.items_count
 
     def is_set_empty(self):
         # The set is empty if the head stack size is 0 and there is no following stack
@@ -105,7 +86,7 @@ class SetOfStacks:
     sub-stack.
     '''
     def pop_at(self, index):
-        current_stack = self.head_stack
+        current_stack = self.stack_set.head
         num_nodes_ahead = 0
         temp = Stack()
 
@@ -117,7 +98,7 @@ class SetOfStacks:
         # the positions from earlier stacks
         if sub_stack > 0:
             for stack in range(0, sub_stack):
-                current_stack = current_stack.get_next()
+                current_stack = current_stack.getNext()
 
             # Now that we are operating on a specific stack only, get the index of the node item
             # with respect to where it sits in this stack
@@ -125,21 +106,21 @@ class SetOfStacks:
 
             # Also calculate and capture the number of nodes ahead of the particular index
             # Note that we deduct a further 1 due to indexes starting at 0
-            num_nodes_ahead = current_stack.size() - particular_stack_index - 1
+            num_nodes_ahead = current_stack.getData().size() - particular_stack_index - 1
 
         # Pop all the items ahead of the index and push them in to a temporary stack
         for indice in range(0, num_nodes_ahead):
-            temp.push(current_stack.pop().getData())
+            temp.push(current_stack.getData().pop().getData())
 
         # Pop the top node out of the current stack which is the node item at 'index'
-        popped_node = current_stack.pop()
+        popped_node = current_stack.getData().pop()
 
         # Push everything back in to the current stack from temp
         while temp.is_empty() is False:
-            current_stack.push(temp.pop().getData())
+            current_stack.getData().push(temp.pop().getData())
 
         # Shuffle all node items up the set by one to fill the gap left by popping earlier
-        while current_stack.get_next() is not None:
+        while current_stack.getData().get_next() is not None:
             current_stack.push(current_stack.get_next().pop().getData())
             current_stack = current_stack.get_next()
 

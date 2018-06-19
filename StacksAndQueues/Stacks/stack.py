@@ -5,10 +5,7 @@ class Stack:
 
     def __init__(self):
         self.top = None
-
-        # Added for setOfStacks solution - 3.3
-        self.next = None
-        self.previous = None
+        self.stack_size = 0
 
     def is_empty(self):
         return self.top is None
@@ -24,6 +21,7 @@ class Stack:
         # Assign the new temp item as the top item of the stack (the previous top item
         # is already pointing to the next item in the stack)
         self.top = temp
+        self.stack_size += 1
 
     def pop(self):
         item = None
@@ -42,34 +40,26 @@ class Stack:
         return self.top.getData()
 
     def size(self):
-        current = self.top
-        count = 0
-
-        # Keep iterating through the stack and increment the count per iteration
-        while current is not None:
-            count += 1
-            current = current.getNext()
-
-        return count
+        return self.stack_size
 
     '''
     3.2
-    '''
-    def find_min(self):
-        # Store the top node data initially
-        min_element = self.top.getData()
-        # We've already accounted for the data in the top node, so set current as the next node
-        current = self.top.getNext()
-
-        # Iterate through and compare the node data with min_element each time, and store the current node
-        # data in to min_element if it is less than min_element.
-        while current is not None:
-            if current.getData() < min_element:
-                min_element = current.getData()
-
-            current = current.getNext()
-
-        return min_element
+    # '''
+    # def find_min(self):
+    #     # Store the top node data initially
+    #     min_element = self.top.getData()
+    #     # We've already accounted for the data in the top node, so set current as the next node
+    #     current = self.top.getNext()
+    #
+    #     # Iterate through and compare the node data with min_element each time, and store the current node
+    #     # data in to min_element if it is less than min_element.
+    #     while current is not None:
+    #         if current.getData() < min_element:
+    #             min_element = current.getData()
+    #
+    #         current = current.getNext()
+    #
+    #     return min_element
 
     '''
     3.3
