@@ -1,39 +1,53 @@
 from AlgoAndDS.StacksAndQueues.Stacks.stack import Stack
 
-# class Stack():
-#     def __init__(self):
-#         pass
+'''
+3.2 How would you design a stack which, in addition to push and pop, also has a function
+min which returns the minimum element? Push, pop and min should all operate in
+O(1) time.
+'''
 
+# We pass in an object of the parent class to the child
 class StackFindMin(Stack):
-    # def __init__(self, top, stack_size):
     def __init__(self):
-        # Stack.__init__(self, top, stack_size)
-        self.top = None
-        self.stack_size = 0
+        # Bring in the super class's variables
+        super(StackFindMin, self).__init__()
+        # Use a regular stack to keep track of the history of minimal elements
+        self._min_value = Stack()
+        self._temp_stack = Stack()
 
+    def push(self, item):
+        # Call the parent class's push method
+        super().push(item)
 
-    def find_min(self):
-        # Store the top node data initially
-        min_element = self.top.getData()
-        # We've already accounted for the data in the top node, so set current as the next node
-        current = self.top.getNext()
+        # Continually compare item to the value at the top of min_value and append item
+        # once the new element to the min_value stack if it is found to be smaller than what
+        # is current at the top.
+        self.set_min(item)
 
-        # Iterate through and compare the node data with min_element each time, and store the current node
-        # data in to min_element if it is less than min_element.
-        while current is not None:
-            if current.getData() < min_element:
-                min_element = current.getData()
+    def pop(self):
+        # Call the parent class's pop method
+        popped = super().pop()
 
-            current = current.getNext()
+        # Remove the node item value from the min_value stack if it happens to match
+        # the minimum value currently residing at the top of the min_value stack.
+        if popped.getData() == self._min_value.peek():
+            self._min_value.pop()
 
-        return min_element
+        return popped
 
-if __name__ == '__main__':
-    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+    # Getter for the current minimum value
+    def get_min(self):
+        return self._min_value.peek()
 
-    my_stack = StackFindMin()
+    # Setter for the current minimum value
+    def set_min(self, data):
+        if not self.get_min():
+            self._min_value.push(data)
+        else:
+            while self.get_min() is not None and data > self.get_min():
+                self._temp_stack.push(self._min_value.pop().getData())
 
-    for number in numbers:
-        my_stack.push(number)
+            self._min_value.push(data)
 
-    print(my_stack.find_min() == 1)
+            while self._temp_stack.peek() is not None:
+                self._min_value.push(self._temp_stack.pop().getData())

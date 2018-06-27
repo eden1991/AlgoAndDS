@@ -11,12 +11,12 @@ class MyQueue:
         self.temp = Stack()
 
     def put(self, data):
-        while self.main.is_empty() is False:
+        while not self.main.is_empty():
             self.temp.push(self.main.pop().getData())
 
         self.main.push(data)
 
-        while self.temp.is_empty() is False:
+        while not self.temp.is_empty():
             self.main.push(self.temp.pop().getData())
 
     def get(self):

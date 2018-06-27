@@ -8,7 +8,7 @@ class Stack:
         self.stack_size = 0
 
     def is_empty(self):
-        return self.top is None
+        return self.stack_size == 0
 
     def push(self, item):
 
@@ -33,50 +33,18 @@ class Stack:
             # and use it to retrieve and assign the next item in the stack to the head of the stack
             self.top = self.top.getNext()
 
+        self.stack_size -= 1
         return item
 
     def peek(self):
         # Just return the data of the top item
-        return self.top.getData()
+        if self.top:
+            return self.top.getData()
+        else:
+            return None
 
     def size(self):
         return self.stack_size
-
-    '''
-    3.2
-    # '''
-    # def find_min(self):
-    #     # Store the top node data initially
-    #     min_element = self.top.getData()
-    #     # We've already accounted for the data in the top node, so set current as the next node
-    #     current = self.top.getNext()
-    #
-    #     # Iterate through and compare the node data with min_element each time, and store the current node
-    #     # data in to min_element if it is less than min_element.
-    #     while current is not None:
-    #         if current.getData() < min_element:
-    #             min_element = current.getData()
-    #
-    #         current = current.getNext()
-    #
-    #     return min_element
-
-    '''
-    3.3
-    
-    # Some getters and setters for connecting and enabling backward and forward navigation among stacks for solution 3.3
-    '''
-    def set_next(self, next_stack):
-        self.next = next_stack
-
-    def set_previous(self, previous_stack):
-        self.previous = previous_stack
-
-    def get_next(self):
-        return self.next
-
-    def get_previous(self):
-        return self.previous
 
     # Very useful for visually confirming the positioning of nodes as a sanity check
     def print_nodes(self):
