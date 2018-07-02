@@ -189,7 +189,7 @@ class TestStackMethods(unittest.TestCase):
 
         # Make sure that we have initialised with a maximum stack limit of 5
         self.assertEqual(some_set.max_size, 5)
-        #
+
         for num in bunch_of_nums:
             some_set.push(num)
 
@@ -198,41 +198,43 @@ class TestStackMethods(unittest.TestCase):
 
         # Pop the node at index 6, we expect the popped node to be 2
         self.assertEqual(some_set.pop_at(6).getData(), 2)
-        print(some_set.print_nodes())
+
         # Test that some_set now contains 9 items
         self.assertEqual(some_set.set_size()[1], 9)
 
-        # Now pop the node at index 1, we expect the popped node to be 7
+        # Now pop the node at index 7, we expect the popped node to be 4
         self.assertEqual(some_set.pop_at(7).getData(), 4)
 
-        # Test that some_set now contains 7 items
+        # Test that some_set now contains 8 items
         self.assertEqual(some_set.set_size()[1], 8)
 
         # Pop the node at index 1, we expect the popped node to be 7
-        # self.assertEqual(some_set.pop_at(1).getData(), 7)
+        self.assertEqual(some_set.pop_at(1).getData(), 7)
 
         # Pop the node at index 0, we expect the popped node to be 6
-        # self.assertEqual(some_set.pop_at(0).getData(), 6)
+        self.assertEqual(some_set.pop_at(0).getData(), 6)
 
-    #     # Pop the last node in the set, we expect the popped node to be 5
-    #     self.assertEqual(some_set.pop_at(6).getData(), 5)
-    #
-    #     '''
-    #     The remaining nodes should be in the below sequence:
-    #     index |node_item| index |node_item|
-    #      4       |5|                | |
-    #      3       |9|                | |
-    #      2       |8|                | |
-    #      1       |7|                | |
-    #      0       |6|        5       |1|
-    #     '''
-    #
-    #     # Check that the top node in the first stack is 5 by directly peeking at the stack
-    #     self.assertEqual(some_set.head_stack.peek(), 5)
-    #     # some_set.list_set_node_items()
-    #     # Check that the top node in the second stack (and hence, the top of the set of stacks)
-    #     # is 1.
-    #     self.assertEqual(some_set.peek(), 1)
+        # Pop the last node in the set (index 5), we expect the popped node to be 1
+        self.assertEqual(some_set.pop_at(5).getData(), 1)
+
+        # Test that some_set now contains 5 items
+        self.assertEqual(some_set.set_size()[1], 5)
+
+        # And test that some_set only contains 1 stack
+        self.assertEqual(some_set.set_size()[0], 1)
+
+        '''
+        The remaining nodes should be in the below sequence:
+        index |node_item|
+         4       |10|
+         3       |9|
+         2       |8|
+         1       |5|
+         0       |3|
+        '''
+
+        # Check that the top node is 10 by directly peeking at the stack
+        self.assertEqual(some_set.tail_stack.getData().peek(), 10)
 
     '''
     3.6 Write a program to sort a stack in ascending order. You should not make any assumptions
