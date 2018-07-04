@@ -30,6 +30,7 @@ class SetOfStacks:
         # Keep track of the total number of node items in the set
         self.items_count = 0
         # Append a stack to the set for initialisation
+        self.tail_stack = None
         self.append_stack()
 
     def push(self, item):

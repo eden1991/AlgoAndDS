@@ -71,37 +71,8 @@ class TestQueueMethods(unittest.TestCase):
 
         self.assertEqual(current_animal.get_data()[0], "Cat")
 
-
-    def test_shelter_enqueue_from_end(self):
-        my_sheler = Shelter()
-        my_sheler.enqueue("Cat", "Feline")
-        my_sheler.enqueue("Dog", "K-Nine")
-
-        # Test that the current tail is K-Nine
-        self.assertEqual(my_sheler.tail.get_data()[1], "K-Nine")
-
-        # Enqueue a new animal from the end
-        my_sheler.enqueue_from_end("Cat", "Siamese")
-
-        # Test that the new animal enqueued from the end is a Siamese
-        self.assertEqual(my_sheler.tail.get_data()[1], "Siamese")
-
-        # Test that the previous tail is still connected to the newly enqueued tail
-        self.assertEqual(my_sheler.tail.get_previous().get_data()[1], "K-Nine")
-
-    def test_shelter_get_tail(self):
-        my_sheler = Shelter()
-        my_sheler.enqueue("Cat", "Ginger")
-        my_sheler.enqueue("Dog", "German Shepherd")
-
-        # Test that the get_tail method returns German Shepard
-        self.assertEqual(my_sheler.get_tail().get_data()[1], "German Shepherd")
-
-        my_sheler.enqueue("Cat", "Ragdoll")
-        my_sheler.enqueue("Dog", "Pug")
-
-        # Test that the get_tail method now returns Pug
-        self.assertEqual(my_sheler.get_tail().get_data()[1], "Pug")
+        # Test that the shelter size is 4
+        self.assertEqual(my_sheler.size, 4)
 
     def test_shelter_inspect_tail(self):
         my_sheler = Shelter()
@@ -109,10 +80,11 @@ class TestQueueMethods(unittest.TestCase):
         my_sheler.enqueue("Dog", "Bulldog")
 
         # Test that the inspect_tail method returns Bulldog
-        self.assertEqual(my_sheler.get_tail().get_data()[1], "Bulldog")
+        self.assertEqual(my_sheler.inspect_tail()[1], "Bulldog")
 
     def test_shelter_dequeue_any(self):
         my_sheler = Shelter()
+
         my_sheler.enqueue("Cat", "Maine Coon")
         my_sheler.enqueue("Dog", "Poodle")
 
@@ -121,6 +93,9 @@ class TestQueueMethods(unittest.TestCase):
 
         # Test that the dequeue_any method now returns Maine Coon
         self.assertEqual(my_sheler.dequeue_any().get_data()[1], "Maine Coon")
+
+        # Test that the shelter size is now 0
+        self.assertEqual(my_sheler.size, 0)
 
         # Now that the Shelter is empty, test that the dequeue_any method now returns None
         self.assertEqual(my_sheler.dequeue_any(), None)
