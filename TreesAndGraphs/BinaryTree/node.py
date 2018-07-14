@@ -52,9 +52,10 @@ class Node:
         traversed_result = []
         if root:
             traversed_result = traversed_result + self.in_order_traversal(root.left)
+            print("Left:", traversed_result)
             traversed_result.append(root.data)
             traversed_result = traversed_result + self.in_order_traversal(root.right)
-
+            print("Right:", traversed_result)
         return traversed_result
 
     # Pre-order Traversal method
@@ -95,5 +96,5 @@ if __name__ == '__main__':
     root.insert(31)
     root.insert(42)
     print(root.in_order_traversal(root))
-    print(root.pre_order_traversal(root))
-    print(root.post_order_traversal(root))
+    # print(root.pre_order_traversal(root))
+    # print(root.post_order_traversal(root))

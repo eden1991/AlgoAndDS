@@ -4,39 +4,32 @@
     subtrees of any node never differ by more than one.
 '''
 
-def traverse_left(root):
-    # A list to act as a physical counter to store a  series of 1's that represent each level of traversal through
-    # a subtree
-    left_depth = [0]
 
-    if root:
-        # If the root variable contains a node, then recurse on the left side
-        left_depth = left_depth + traverse_left(root.left)
-        # And add to the left_depth counter
-        left_depth[0] += 1
+from AlgoAndDS.TreesAndGraphs.BinaryTree.node import Node
 
-    return left_depth
 
-def traverse_right(root):
-    right_depth = [0]
+def check_balance(root):
+    # Base case: if the root is empty, then it is height balanced, so return 0 (height of a null tree)
+    if root == None:
+        return 0
 
-    if root:
-        right_depth = right_depth + traverse_right(root.right)
-        right_depth[0] += 1
+    # Check if the left subtree is height balanced. If it is, then return its height to the node 'root', else
+    # return -1
+    left_height = check_balance(root.left)
+    if left_height == -1:
+        return -1
 
-    return right_depth
+    # Check if the right subtree is height balanced. If it is, then return its height to the node 'root', else
+    # return -1
+    right_height = check_balance(root.right)
+    if right_height == -1:
+        return -1
 
-def is_balanced(root):
-    # Store the length of the lists passed in from the traverse_ functions above
-    left_side = len(traverse_left(root))
-    right_side = len(traverse_right(root))
+    # Finally, check if the tree is balanced at the starting root node itself by checking the absolute difference between heights
+    # of left and right sub-trees.
+    if abs(left_height - right_height) > 1:
+        return -1
 
-    # Work out which length is larger and deduct from the smaller length
-    if left_side > right_side:
-        difference = left_side - right_side
-    else:
-        difference = right_side - left_side
-
-    # Return True if the difference is no more than 1, which means the tree is balanced.
-    # Else, return False for an unbalanced tree.
-    return difference <= 1
+    # If it is, then return 1 + the greater of the two heights (we're only interested in the side that we traversed down,
+    # hence we determine which side has a greater value which infers that that is the side that we traversed down).
+    return(1 + max(left_height, right_height))
